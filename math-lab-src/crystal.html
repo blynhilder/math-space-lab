@@ -1,0 +1,41 @@
+<style>
+  #ml-crystal-controls { display: grid; gap: 12px; min-width: 0; }
+  #ml-crystal-controls label, #ml-crystal-controls output { min-width: 0; overflow-wrap: anywhere; }
+  #ml-crystal-controls select { width: 100%; min-width: 0; box-sizing: border-box; }
+</style>
+<div id="ml-crystal-controls">
+  <label class="form-label">
+    立方点阵
+    <select class="form-select" data-crystal="type">
+      <option value="SC">简单立方 SC</option>
+      <option value="BCC" selected>体心立方 BCC</option>
+      <option value="FCC">面心立方 FCC</option>
+    </select>
+  </label>
+  <label class="form-label">
+    晶胞重复
+    <select class="form-select" data-crystal="repeat">
+      <option value="1" selected>1 × 1 × 1</option>
+      <option value="2">2 × 2 × 2</option>
+    </select>
+  </label>
+  <label class="form-label">
+    晶面 · 单张代表面
+    <select class="form-select" data-crystal="plane">
+      <option value="none">不显示</option>
+      <option value="100">(100)</option>
+      <option value="110" selected>(110)</option>
+      <option value="111">(111)</option>
+    </select>
+  </label>
+  <label class="form-label">
+    原点晶胞内选点
+    <select class="form-select" data-crystal="selection" aria-label="选择原点晶胞内的晶格点"></select>
+  </label>
+  <div aria-live="polite" style="display:grid;gap:6px">
+    <output class="tabular-nums" data-crystal="coordinate">P = (½, ½, ½)</output>
+    <output class="tabular-nums text-small" data-crystal="counts">单胞有效点数 2 · 屏幕点数 9</output>
+    <output class="text-small" data-crystal="plane-equation">x + y = 1</output>
+  </div>
+  <div class="text-small text-muted">分数坐标，a = 1 · 点阵示意</div>
+</div>

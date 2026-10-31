@@ -1,0 +1,52 @@
+<section class="ml-control-section" aria-labelledby="ml-geo-function-heading">
+  <h3 class="ml-section-heading" id="ml-geo-function-heading">函数与曲面</h3>
+  <div class="ml-field">
+    <label class="form-label" for="ml-geometry-type">曲面类型</label>
+    <select class="form-select" id="ml-geometry-type"><option value="custom">自由函数 · z = f(x,y)</option><option value="quadratic">二次曲面 · z = ax² + by²</option><option value="sphere">球面 · x² + y² + z² = r²</option></select>
+  </div>
+  <div id="ml-custom-controls">
+    <div class="ml-field">
+      <label class="form-label" for="ml-geo-example">常用函数</label>
+      <select class="form-select" id="ml-geo-example" aria-describedby="ml-geo-example-note">
+        <option value="custom">自定义表达式</option>
+        <option value="waves">正弦波面</option>
+        <option value="gaussian">高斯峰</option>
+        <option value="saddle">马鞍面</option>
+        <option value="paraboloid">椭圆抛物面</option>
+        <option value="cone">圆锥面</option>
+        <option value="hemisphere">上半球面</option>
+        <option value="ripples">衰减径向波纹</option>
+        <option value="pole">倒数函数 · 1/x</option>
+      </select>
+      <p class="text-small text-muted" id="ml-geo-example-note"></p>
+    </div>
+    <div class="ml-field"><label class="form-label" for="ml-geo-expression">函数表达式 · z =</label><input class="form-control" id="ml-geo-expression" type="text" value="sin(x)*cos(y)" maxlength="256" autocomplete="off" spellcheck="false" aria-describedby="ml-geo-expression-help ml-geo-expression-error"></div>
+    <button class="btn btn-primary" type="button" id="ml-geo-draw">绘制曲面</button>
+    <p class="text-small text-destructive" id="ml-geo-expression-error" role="alert" hidden></p>
+    <details class="ml-help">
+      <summary class="text-small">表达式语法与绘图范围</summary>
+      <div class="text-small text-muted" id="ml-geo-expression-help">
+        <p>变量 x、y；可调参数 a、b；常数 pi、e。乘法写 *，幂写 ^，例如 sin(a*x)*cos(b*y)。编辑后按 Enter 或点击绘制。</p>
+        <p>常用函数：sin、cos、tan、sqrt、abs、exp、log，以及 min(u,v)、max(u,v)。log 为自然对数。</p>
+        <p>x,y ∈ [−2,2]，只绘制实数且 |z| ≤ 8 的部分；未定义或间断处留空。</p>
+      </div>
+    </details>
+  </div>
+  <div class="ml-formula text-small tabular-nums" id="ml-geo-equation"></div>
+</section>
+<section class="ml-control-section" aria-labelledby="ml-geo-parameters-heading">
+  <h3 class="ml-section-heading" id="ml-geo-parameters-heading">参数</h3>
+  <div id="ml-quadratic-controls">
+    <p class="text-small text-muted" id="ml-geo-parameter-note"></p>
+    <div class="ml-field"><div class="ml-field-head"><label class="form-label" for="ml-geo-a">系数 a</label><output class="tabular-nums" id="ml-geo-a-value"></output></div><input class="form-range" id="ml-geo-a" type="range" min="-1" max="1" step="0.05" value="0.5"></div>
+    <div class="ml-field"><div class="ml-field-head"><label class="form-label" for="ml-geo-b">系数 b</label><output class="tabular-nums" id="ml-geo-b-value"></output></div><input class="form-range" id="ml-geo-b" type="range" min="-1" max="1" step="0.05" value="0.5"></div>
+  </div>
+  <div id="ml-sphere-controls" hidden><div class="ml-field"><div class="ml-field-head"><label class="form-label" for="ml-geo-r">半径 r</label><output class="tabular-nums" id="ml-geo-r-value"></output></div><input class="form-range" id="ml-geo-r" type="range" min="0.5" max="2" step="0.05" value="1.5"></div></div>
+</section>
+<section class="ml-control-section" aria-labelledby="ml-geo-slice-heading">
+  <h3 class="ml-section-heading" id="ml-geo-slice-heading">联动截面</h3>
+  <p class="text-small text-muted">移动 y = c，观察三维高亮截线与下方 xz 图像。</p>
+  <div class="ml-field"><div class="ml-field-head"><label class="form-label" for="ml-geo-c">切面 y = c</label><output class="tabular-nums" id="ml-geo-c-value"></output></div><input class="form-range" id="ml-geo-c" type="range" min="-2" max="2" step="0.05" value="0.5"></div>
+  <svg class="ml-cut-plot" id="ml-geo-cut" role="img" aria-label="截线在 xz 平面内的图像"></svg>
+  <div class="ml-formula text-small tabular-nums" id="ml-geo-cut-equation"></div>
+</section>

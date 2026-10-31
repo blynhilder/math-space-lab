@@ -1,0 +1,4 @@
+third-party-licenses/** -whitespace
+math-plugin/public/bridge.js -whitespace
+math-plugin/public/math-lab.html -whitespace
+math-site/src/math-lab.html -whitespace
