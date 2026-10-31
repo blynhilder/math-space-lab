@@ -1,5 +1,7 @@
 # Math Space Lab
 
+[![CI](https://github.com/blynhilder/math-space-lab/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/blynhilder/math-space-lab/actions/workflows/ci.yml?query=branch%3Amain)
+
 An interactive mathematics workbench for exploring surfaces, 3D coordinates, linear transformations and cubic crystals, with MCP interfaces for compatible chat clients.
 
 [中文说明](README.zh-CN.md) · [Development](docs/DEVELOPMENT.md) · [Validation](docs/VALIDATION.md)
@@ -45,6 +47,12 @@ Open **http://127.0.0.1:52186/**. The `math-site` preview serves the app and a s
 Start with a quadratic surface, drag its parameters and cross-section, then switch to matrices and compare a shear with a plane projection. Finish with an FCC lattice and its (111) plane. All views run in the browser.
 
 ## Development checks
+
+GitHub Actions rebuilds the bridge, both UI files and the Worker, then runs all
+five automated check suites on pushes and pull requests. CI uses Ubuntu 24.04,
+Node.js 24 and Python 3.12. See [CI scope and reproduction](docs/CI.md) for the
+complete command sequence and the checks that still require manual acceptance.
+The badge tracks `main`; pull request results appear in the PR Checks tab.
 
 ```sh
 node math-lab-src/test-expression.cjs

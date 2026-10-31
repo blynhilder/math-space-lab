@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and regression tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: |
+            math-plugin/package-lock.json
+            math-site/package-lock.json
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+
+      - name: Record runtime versions
+        run: |
+          node --version
+          npm --version
+          python --version
+
+      - name: Install locked dependencies
+        run: |
+          npm ci --prefix math-plugin --include=dev --ignore-scripts --no-audit --no-fund
+          npm ci --prefix math-site --include=dev --ignore-scripts --no-audit --no-fund
+
+      - name: Rebuild bridge and UI from source
+        run: |
+          rm math-plugin/public/bridge.js math-plugin/public/math-lab.html math-site/src/math-lab.html
+          npm --prefix math-plugin run build:bridge
+          python scripts/build-ui.py
+
+      - name: Verify checked-in generated files are current
+        run: git diff --exit-code -- math-plugin/public/bridge.js math-plugin/public/math-lab.html math-site/src/math-lab.html
+
+      - name: Build Worker
+        run: npm --prefix math-site run build
+
+      - name: Expression checks
+        run: node math-lab-src/test-expression.cjs
+
+      - name: Matrix regression tests
+        run: node math-lab-src/test-matrix-analysis.cjs
+
+      - name: Matrix and crystal factory checks
+        run: node math-lab-src/check-matrix-crystal.cjs
+
+      - name: Node MCP HTTP transport tests
+        run: npm --prefix math-plugin test
+
+      - name: Worker bundle tests
+        run: npm --prefix math-site test
